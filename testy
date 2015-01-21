@@ -1,0 +1,9 @@
+#!/usr/bin/python
+
+x = 3
+y = 6
+
+if (x == 5) or (y == 6):
+    print "jeden"
+else:
+        print "dwa"
