@@ -5,16 +5,16 @@ import numpy as np
 import matr
 import os
 
-DL1=0 #do not change values to numerical fot these variables which do not have _v in their name
+PL = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+DL = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DL1_v=0
-DL2=0
 DL2_v=0
-PL1=0
-PL2=0
 PL1_v=0
 PL1_v=0
 DL_V=0
 PL_V=0
+BET=10
+CASH=1000
 deck = [2,3,4,5,6,7,8,9,10,"J","Q","K","A"]
 
 #return numerical value !problem with aces!
@@ -31,15 +31,15 @@ def numerical_value(card):
 def print_val():
     print os.system("clear")
     print "DEALER:"
-    print "%s" % DL1
+    print "%s" % DL[0]
     print "\nPLAYER:"
-    print "%s %s" % (PL1, PL2)
+    print "%s %s" % (PL[0], PL[1])
 
 #check which matrice is valid, precheck has to done to determine if there is bj
 def check_matrice(pl1, pl2):
-    if PL1 == PL2:
+    if pl1 == pl2:
         return "matrice_c.dat"
-    elif (PL1 == "A") or (PL2 == "A"):
+    elif (pl1 == "A") or (pl2 == "A"):
         return "matrice_b.dat"
     else:
         return "matrice_a.dat" 
@@ -56,32 +56,37 @@ def prop_play(pl1, pl2, dl1):
     else: 
         print "Error with determination of proper play"
 
+def precheck(pl0, pl1, dl0):
+    if PL_V == 21 AND DL_V != 21:
+        BET = BET * 1.5
+	CASH = CASH + BET
+    elif PL_V == 21 
+	CASH = CASH 
+    else 
+	True
+
 #toss for random cards
-DL1 = random.choice(deck)
-DL2 = random.choice(deck)
-PL1 = random.choice(deck)
-PL2 = random.choice(deck)
+DL[0] = random.choice(deck)
+DL[1] = random.choice(deck)
+PL[0] = random.choice(deck)
+PL[1] = random.choice(deck)
 
 #get numerical values of cards
-DL1_v = numerical_value(DL1)
-DL2_v = numerical_value(DL2)
-PL1_v = numerical_value(PL1)
-PL2_v = numerical_value(PL2)
+DL0_v = numerical_value(DL[0])
+DL1_v = numerical_value(DL[1])
+PL0_v = numerical_value(PL[0])
+PL1_v = numerical_value(PL[1])
 
 print_val()
 
-PL_V = PL1_v + PL2_v #calculates overall numerical value for player
-DL_V = DL1_v + DL2_v #calculates overall numerical value for dealer
+PL_V = PL0_v + PL1_v #calculates overall numerical value for player
+DL_V = DL0_v + DL1_v #calculates overall numerical value for dealer
 
 #check which matrice to use
 #print "Proper matrice: "
 #print check_matrice(PL1, PL2)
 
 print "\nProper play: "
-#print str.center(12, 'Proper play:')
-#str = "this is string example....wow!!!";
-#print str.center(100)
 
-
-print prop_play(PL1_v, PL2_v, DL1_v)
+print prop_play(PL0_v, PL1_v, DL0_v)
 print prop_play(10, 10, 10)
