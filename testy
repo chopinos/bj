@@ -1,4 +1,11 @@
 #!/usr/bin/python
 t = [5, 3, 2, 6, 10, 11]
+print t
 
-print sum(t[0:3])
+def dupa(t):
+    t[0] = 4
+    print t
+    return 0
+
+dupa(t[:])
+print t

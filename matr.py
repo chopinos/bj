@@ -7,11 +7,8 @@ import numpy as np
 #PL[9] -> no of card
 #PL[10] -> to play or not
 
-PL = [5, 4, 0, 0, 0, 0, 0, 0, 0, 2, 0]
-DL = [6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-PLv = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DLv = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DL_V=0
+PL = [4, 5, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+DL = ['Q', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 PL_V=0
 
 def numerical_value(card):
@@ -25,42 +22,47 @@ def numerical_value(card):
 
 def ch_matrice_a(PL, DL):
     data = np.genfromtxt("matrice_a.dat",delimiter="|",dtype=str) #get matrice
-    for x in xrange(9):
-       PLv[x] = numerical_value(PL[x])
-       DLv[x] = numerical_value(DL[x])
-    PL_V = sum(PL[0:8]) #take sum, assume that there are no A or other fig.
-    DL_V = sum(DL)
 
     if DL[0] == "A": #check if dealer card is A, then assign value
         DL[0] = 11
+    DL[0] = numerical_value(DL[0])
+
+    for x in xrange(9):
+       PL[x] = numerical_value(PL[x])
+    PL_V = sum(PL[0:8]) #take sum, assume that there are no A or other fig.
     if PL_V > 17:
         PL_V = 17
-    else: 
-        True
     
-    if (data[PL_V - 4][DL_V - 1] == 'D') and (PL[9] > 1):
+    if (data[PL_V - 4][DL[0] - 1] == 'D') and (PL[9] > 1):
         decision = 'H'
     else:
-        decision = data[PL_V - 4][DL_V - 1]
+        decision = data[PL_V - 4][DL[0] - 1]
     return decision
 
 def ch_matrice_b(PL, DL):
     data = np.genfromtxt("matrice_b.dat",delimiter="|",dtype=str) #get matrice
-    if DL[0] == "A": #check if dealer card is A
+    if DL[0] == "A": #check if dealer card is A, then assign value
         DL[0] = 11
-    
+    DL[0] = numerical_value(DL[0])
+
+
     #check which card is A
     if PL[0] == "A":
+        PL[1] = numerical_value(PL[1])
         return data[PL[1] - 1][DL[0] - 1]
     elif PL[1] == "A":
+        PL[0] = numerical_value(PL[1])
         return data[PL[0] - 1][DL[1] - 1]
 
 def ch_matrice_c(PL, DL):
     data = np.genfromtxt("matrice_c.dat",delimiter="|",dtype=str) #get matrice
-    if DL[0] == "A":
+    if DL[0] == "A": #check if dealer card is A, then assign value
         DL[0] = 11
-    if PL[0] == "A": #check if cards are As
-        PL[1] = 1
+    DL[0] = numerical_value(DL[0])
+
+    for x in xrange(9):
+        PL[x] = numerical_value(PL[x])
+
     return data[PL[0]][DL[0] - 1]
 
-print ch_matrice_a(PL, DL)
+#print ch_matrice_a(PL, DL)
