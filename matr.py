@@ -7,8 +7,8 @@ import numpy as np
 #PL[9] -> no of card
 #PL[10] -> to play or not
 
-PL = [4, 5, 0, 0, 0, 0, 0, 0, 0, 1, 0]
-DL = ['Q', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+PL = [9, 'A', 0, 0, 0, 0, 0, 0, 0, 1, 0]
+DL = [4, 'J', 0, 0, 0, 0, 0, 0, 0, 0, 0]
 PL_V=0
 
 def numerical_value(card):
@@ -45,14 +45,13 @@ def ch_matrice_b(PL, DL):
         DL[0] = 11
     DL[0] = numerical_value(DL[0])
 
-
     #check which card is A
     if PL[0] == "A":
         PL[1] = numerical_value(PL[1])
         return data[PL[1] - 1][DL[0] - 1]
     elif PL[1] == "A":
-        PL[0] = numerical_value(PL[1])
-        return data[PL[0] - 1][DL[1] - 1]
+        PL[0] = numerical_value(PL[0])
+        return data[PL[0] - 1][DL[0] - 1]
 
 def ch_matrice_c(PL, DL):
     data = np.genfromtxt("matrice_c.dat",delimiter="|",dtype=str) #get matrice
@@ -65,4 +64,4 @@ def ch_matrice_c(PL, DL):
 
     return data[PL[0]][DL[0] - 1]
 
-#print ch_matrice_a(PL, DL)
+#print ch_matrice_b(PL, DL)

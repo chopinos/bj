@@ -8,12 +8,18 @@ import situations as sit
 
 PL = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DL = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+global PLv 
 PLv = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+global DLv
 DLv = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-DL_V=0
-PL_V=0
-BET=10
-CASH=1000
+global DLV
+DLV = 0
+global PLV
+PLV = 0
+global BET
+global CASH
+BET = 10
+CASH = 1000
 deck = [2,3,4,5,6,7,8,9,10,"J","Q","K","A"]
 
 #return numerical value !problem with aces!
@@ -28,7 +34,7 @@ def numerical_value(card):
 
 #print values
 def print_val():
-    print os.system("clear")
+#    print os.system("clear")
     print "DEALER:"
     print "%s" % DL[0]
     print "\nPLAYER:"
@@ -63,34 +69,33 @@ def precheck(PL, DL):
     else:
     	True
 
-#return overall value of cards
-#def p_val():
-#    print PL_V
-#    for x in xrange(9):
-#        PL_V = PL_V + PLv[x] 
-#        return PL_V
-
 #toss for random cards
-#DL[0] = random.choice(deck)
-#DL[1] = random.choice(deck)
-#PL[0] = random.choice(deck)
-#PL[1] = random.choice(deck)
 sit.hit(PL)
 sit.hit(PL)
 sit.hit(DL)
-
-print PL 
-print DL
+sit.hit(DL)
+#print PL 
+#print DL
 #get numerical values of cards
 for x in xrange(9):
     PLv[x] = numerical_value(PL[x]) 
     DLv[x] = numerical_value(DL[x])
-    #print PLv[x]
+
+PLV = sum(PLv[0:8])
+DLV = sum(DLv[0:8])
+
+#gramy!
+print os.system("clear")
+print "Kasa: %d" % CASH
+print "Zaklad: %d" % BET
 
 print_val()
 
-PL_V = PLv[0] + PLv[1] #calculates overall numerical value for player
-DL_V = DLv[0] + DLv[1] #calculates overall numerical value for dealer
+if PLV == 21 and DLV != 21:
+    BET = BET * 1.5
+    CASH = CASH + BET
+elif PLV == 21:
+    CASH = CASH
 
 #check which matrice to use
 print "\nProper matrice: "
