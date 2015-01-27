@@ -20,6 +20,9 @@ global BET
 global CASH
 BET = 10
 CASH = 1000
+no_games = 0
+pro_dec = 0
+wro_dec = 0
 deck = [2,3,4,5,6,7,8,9,10,"J","Q","K","A"]
 
 #return numerical value !problem with aces!
@@ -69,40 +72,64 @@ def precheck(PL, DL):
     else:
     	True
 
-#toss for random cards
-sit.hit(PL)
-sit.hit(PL)
-sit.hit(DL)
-sit.hit(DL)
-#print PL 
-#print DL
-#get numerical values of cards
-for x in xrange(9):
-    PLv[x] = numerical_value(PL[x]) 
-    DLv[x] = numerical_value(DL[x])
+#gramy
+def lets_play():
 
-PLV = sum(PLv[0:8])
-DLV = sum(DLv[0:8])
+    print os.system("clear")
+    print_val()
 
-#gramy!
-print os.system("clear")
-print "Kasa: %d" % CASH
-print "Zaklad: %d" % BET
+    if ((PL[0] == 'A' or PL[1] == 'A') and PLV == 11 and (DL[0] == 'A' or DL[1] == 'A' and PLV == 11)):
+        print "PUSH. NOONE WINS"
+    elif (PL[0] == 'A' or PL[1] == 'A') and PLV == 11:
+        print "BLACKJACK!"
+#        BET = BET * 1.5
+#        CASH = CASH + BET
+    else: 
+        global my_decision
+        my_decision = raw_input("\nWhat is your decision? \nHit (1), Stand (2), Double (3), sPlit (4), End (5): \n")
+        if   my_decision == '1':
+            my_decision = 'H'
+        elif my_decision == '2':
+            my_decision = 'S'
+        elif my_decision == '3':
+            my_decision = 'D'
+        elif my_decision == '4':
+            my_decision = 'P'
+        elif my_decision == '5':
+            my_decision = 'E'
 
-print_val()
+        if (prop_play(PL[:], DL[:]) == my_decision):
+            print "[+] GOOD JOB!"
+#            CASH = CASH + BET
+            global pro_dec
+            pro_dec =  pro_dec + 1
+        elif my_decision == 'E':
+            print "GOODBYE"
+        else:
+            print "[-] WRONG" 
+            print "Proper decision: %s" % prop_play(PL[:], DL[:])
+#	    CASH = CASH - BET
+            global wro_dec 
+            wro_dec = wro_dec + 1
+    raw_input()
 
-if PLV == 21 and DLV != 21:
-    BET = BET * 1.5
-    CASH = CASH + BET
-elif PLV == 21:
-    CASH = CASH
+my_decision = 'Y'
+while(my_decision != 'E'):
+    PL = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    DL = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    sit.hit(PL)
+    sit.hit(PL)
+    sit.hit(DL)
+    sit.hit(DL)
+    for x in xrange(9):
+        PLv[x] = numerical_value(PL[x])
+        DLv[x] = numerical_value(DL[x])
 
-#check which matrice to use
-print "\nProper matrice: "
-print check_matrice(PL)
+    PLV = sum(PLv[0:8])
+    DLV = sum(DLv[0:8])
+    lets_play()
+    no_games = no_games + 1
 
-print "\nProper play: "
-print prop_play(PL[:], DL[:])
-
-print PL
-print DL
+print "Overall games: %d" % (no_games - 1)
+print "Proper decisions: %d" % pro_dec
+print "Wrong decisions: %d" % (wro_dec)
