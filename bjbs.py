@@ -21,6 +21,7 @@ global CASH
 BET = 10
 CASH = 1000
 no_games = 0
+global pro_dec
 pro_dec = 0
 wro_dec = 0
 deck = [2,3,4,5,6,7,8,9,10,"J","Q","K","A"]
@@ -78,10 +79,14 @@ def lets_play():
     print os.system("clear")
     print_val()
 
-    if ((PL[0] == 'A' or PL[1] == 'A') and PLV == 11 and (DL[0] == 'A' or DL[1] == 'A' and PLV == 11)):
+    if ((PL[0] == 'A' or PL[1] == 'A') and PLV == 11 and ((DL[0] == 'A' or DL[1] == 'A') and PLV == 11)):
         print "PUSH. NOONE WINS"
+        global pro_dec
+        pro_dec = pro_dec + 1
     elif (PL[0] == 'A' or PL[1] == 'A') and PLV == 11:
         print "BLACKJACK!"
+        global pro_dec 
+        pro_dec = pro_dec + 1
 #        BET = BET * 1.5
 #        CASH = CASH + BET
     else: 
@@ -131,5 +136,5 @@ while(my_decision != 'E'):
     no_games = no_games + 1
 
 print "Overall games: %d" % (no_games - 1)
-print "Proper decisions: %d" % pro_dec
-print "Wrong decisions: %d" % (wro_dec)
+print "Proper decisions: %d (%d%%)" % (pro_dec, 100 * float(pro_dec) / (no_games - 1))
+print "Wrong decisions: %d (%d%%)" % (wro_dec, 100 * float(wro_dec) / (no_games - 1))
