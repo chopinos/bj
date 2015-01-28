@@ -33,7 +33,7 @@ def ch_matrice_a(PL, DL):
     if PL_V > 17:
         PL_V = 17
     
-    if (data[PL_V - 4][DL[0] - 1] == 'D') and (PL[9] > 2):
+    if (data[PL_V - 4][DL[0] - 1] == 'D') and (int(PL[9]) > 2):
         decision = 'H'
     else:
         decision = data[PL_V - 4][DL[0] - 1]
