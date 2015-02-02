@@ -5,7 +5,6 @@ import numpy as np
 import matr
 import os
 import situations as sit
-from datetime import datetime
 
 PL = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 DL = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -119,12 +118,12 @@ def lets_play():
             wro_dec = wro_dec + 1
     raw_input()
 
-start = datetime.now()
 my_decision = 'Y'
 while(my_decision != 'E'):
     PL = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     DL = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    sit.hit(PL)
+    PL[0] = 'A'
+    PL[9] = 1
     sit.hit(PL)
     sit.hit(DL)
     sit.hit(DL)
@@ -137,9 +136,6 @@ while(my_decision != 'E'):
     lets_play()
     no_games = no_games + 1
 
-end = datetime.now()
 print "Overall games: %d" % (no_games - 1)
 print "Proper decisions: %d (%d%%)" % (pro_dec, 100 * float(pro_dec) / (no_games - 1))
 print "Wrong decisions: %d (%d%%)" % (wro_dec, 100 * float(wro_dec) / (no_games - 1))
-print "Time: ", end - start
-print "Time per decision: ", (end - start) / (no_games - 1)
